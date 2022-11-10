@@ -134,19 +134,19 @@ public class DeliveryCardTest {
         $("[data-test-id='phone'] .input__sub").shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
-//    @Test
-//    void noTickedConsent() {
-//        open("http://localhost:9999");
-//
-//        $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
-//        $("[data-test-id='date'] input").doubleClick();
-//        $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-//        $("[data-test-id='date'] input").setValue(actualDate());
-//        $("[data-test-id='name'] input").setValue("Иван Иванов");
-//        $("[data-test-id='phone'] input").setValue("+70001112233");
-////        $("[data-test-id='agreement']").click();
-//        $$("button").findBy(text("Забронировать")).click();
-//        $("[data-test-id='agreement'] .input_invalid").shouldHave(text("Я соглашаюсь с условиями обработки и использования моих персональных данных"));
-//    }
+    @Test
+    void noTickedConsent() {
+        open("http://localhost:9999");
+
+        $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
+        $("[data-test-id='date'] input").doubleClick();
+        $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
+        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='name'] input").setValue("Иван Иванов");
+        $("[data-test-id='phone'] input").setValue("+70001112233");
+//        $("[data-test-id='agreement']").click();
+        $$("button").findBy(text("Забронировать")).click();
+        $("[data-test-id='agreement'].input_invalid").shouldHave(text("Я соглашаюсь с условиями обработки и использования моих персональных данных"));
+    }
 
 }
