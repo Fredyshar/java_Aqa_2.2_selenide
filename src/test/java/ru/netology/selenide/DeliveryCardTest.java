@@ -1,5 +1,7 @@
 package ru.netology.selenide;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.conditions.Text;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -14,29 +16,28 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class DeliveryCardTest {
 
-    private String actualDate() {
-        String date = LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("dd MM yyyy"));
-        return date;
+    private String actualDate(long daysToAdd, String pattern) {
+        return LocalDate.now().plusDays(daysToAdd).format(DateTimeFormatter.ofPattern(pattern));
     }
 
     @Test
     void happyPath() {
         open("http://localhost:9999");
-
-        //LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd MM yyyy"));
         $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
         $("[data-test-id='name'] input").setValue("Иван Иванов");
 
         $("[data-test-id='phone'] input").setValue("+70001112233");
         $("[data-test-id='agreement']").click();
         $$("button").findBy(text("Забронировать")).click();
-        $(withText("Успешно!")).shouldBe(visible, Duration.ofMillis(15000));
-        //$("[data-test-id='notification']").shouldBe(visible, Duration.ofMillis(15000));
+//        $(withText("Успешно!")).shouldBe(visible, Duration.ofMillis(15000));
+        $(".notification__content")
+                .shouldHave(Condition.text("Успешно"), Duration.ofSeconds(15))
+                .shouldHave(Condition.text("Встреча успешно забронирована на " + actualDate(10, "dd.MM.yyyy")))
+                .shouldBe((Condition.visible));
     }
-
 
     @Test
     void deliveryToThisCityIsNotPossible() {
@@ -45,7 +46,7 @@ public class DeliveryCardTest {
         $("[data-test-id='city'] .input__control").setValue("Рубцовск");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
         $("[data-test-id='name'] input").setValue("Иван Иванов");
         $("[data-test-id='phone'] input").setValue("+70001112233");
         $("[data-test-id='agreement']").click();
@@ -68,7 +69,7 @@ public class DeliveryCardTest {
         $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
 
         $("[data-test-id='phone'] input").setValue("+70001112233");
         $("[data-test-id='agreement']").click();
@@ -83,7 +84,7 @@ public class DeliveryCardTest {
         $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
         $("[data-test-id='name'] input").setValue("Иван Иванов");
 
         $("[data-test-id='agreement']").click();
@@ -126,7 +127,7 @@ public class DeliveryCardTest {
         $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
         $("[data-test-id='name'] input").setValue("Иван Иванов");
         $("[data-test-id='phone'] input").setValue("80001112233");
         $("[data-test-id='agreement']").click();
@@ -141,10 +142,9 @@ public class DeliveryCardTest {
         $("[data-test-id='city'] .input__control").setValue("Санкт-Петербург");
         $("[data-test-id='date'] input").doubleClick();
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
-        $("[data-test-id='date'] input").setValue(actualDate());
+        $("[data-test-id='date'] input").setValue(actualDate(10, "dd MM yyyy"));
         $("[data-test-id='name'] input").setValue("Иван Иванов");
         $("[data-test-id='phone'] input").setValue("+70001112233");
-//        $("[data-test-id='agreement']").click();
         $$("button").findBy(text("Забронировать")).click();
         $("[data-test-id='agreement'].input_invalid").shouldHave(text("Я соглашаюсь с условиями обработки и использования моих персональных данных"));
     }
