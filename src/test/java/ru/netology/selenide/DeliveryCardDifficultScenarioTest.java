@@ -1,6 +1,7 @@
 package ru.netology.selenide;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -47,17 +48,20 @@ public class DeliveryCardDifficultScenarioTest {
         $("[data-test-id='city'] .input__control").click();
         $("[data-test-id='city'] .input__control").setValue(city.substring(0, 2));
         $$(".menu-item").findBy(Condition.text(city)).click();
-        $("[data-test-id='date'] input").click();
-        $$(".calendar__arrow").last().click();
-        $$(".calendar__day").findBy(Condition.text(dateAcrossSomeWeeks(3, "d"))).click();
-        $("[data-test-id='name'] input").setValue("Иван Иванов");
+        $("[data-test-id='date'] .input").click();
 
+        if ($(".calendar__name").shouldNotHave(Condition.text(dateAcrossSomeWeeks(5, "LLLL YYYY"))).exists()) {
+            $$(".calendar__arrow").last().click();
+        }
+        $$(".calendar__day").findBy(Condition.text(dateAcrossSomeWeeks(5, "d"))).click();
+
+        $("[data-test-id='name'] input").setValue("Иван Иванов");
         $("[data-test-id='phone'] input").setValue("+70001112233");
         $("[data-test-id='agreement']").click();
         $$("button").findBy(text("Забронировать")).click();
         $(".notification__content")
                 .shouldHave(Condition.text("Успешно"), Duration.ofSeconds(15))
-                .shouldHave(Condition.text("Встреча успешно забронирована на " + dateAcrossSomeWeeks(3, "dd.MM.yyyy")))
+                .shouldHave(Condition.text("Встреча успешно забронирована на " + dateAcrossSomeWeeks(5, "dd.MM.yyyy")))
                 .shouldBe((Condition.visible));
     }
 }
