@@ -44,7 +44,6 @@ public class DeliveryCardDifficultScenarioTest {
                 .shouldHave(Condition.text("Встреча успешно забронирована на " + dateAcrossSomeWeeks(1, "dd.MM.yyyy")))
                 .shouldBe((Condition.visible));
     }
-
     @Test
     void happyPathAcrossThreeWeeks() {
         String city = "Санкт-Петербург";
