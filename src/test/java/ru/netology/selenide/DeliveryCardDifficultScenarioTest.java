@@ -30,9 +30,9 @@ public class DeliveryCardDifficultScenarioTest {
         $("[data-test-id='date'] input").click();
         String textCalendarName = $(".calendar__name").getText().toUpperCase();
         int counter = 5;
-        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0 ) {
+        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0) {
             $$(".calendar__arrow").last().click();
-            counter -=1;
+            counter -= 1;
             textCalendarName = $(".calendar__name").getText().toUpperCase();
         }
         $$(".calendar__day").findBy(Condition.text(dateAcrossSomeWeeks(1, "d"))).click();
@@ -61,9 +61,9 @@ public class DeliveryCardDifficultScenarioTest {
         String textCalendarName = $(".calendar__name").getText().toUpperCase();
 
         int counter = 5;
-        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0 ) {
+        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0) {
             $$(".calendar__arrow").last().click();
-            counter -=1;
+            counter -= 1;
             textCalendarName = $(".calendar__name").getText().toUpperCase();
         }
         $$(".calendar__day").findBy(Condition.text(dateAcrossSomeWeeks(3, "d"))).click();
@@ -91,9 +91,9 @@ public class DeliveryCardDifficultScenarioTest {
         String textCalendarName = $(".calendar__name").getText().toUpperCase();
 
         int counter = 5;
-        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0 ) {
+        while ((!textCalendarName.equals(textDateAcrossWeeks)) || counter == 0) {
             $$(".calendar__arrow").last().click();
-            counter -=1;
+            counter -= 1;
             textCalendarName = $(".calendar__name").getText().toUpperCase();
         }
         $$(".calendar__day").findBy(Condition.text(dateAcrossSomeWeeks(15, "d"))).click();
