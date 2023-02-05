@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
@@ -13,7 +14,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class DeliveryCardDifficultScenarioTest {
 
     private String dateAcrossSomeWeeks(long weeksToAdd, String pattern) {
-        return LocalDate.now().plusWeeks(weeksToAdd).format(DateTimeFormatter.ofPattern(pattern));
+        return LocalDate.now().plusWeeks(weeksToAdd).format(DateTimeFormatter.ofPattern(pattern, new Locale("ru")));
+
     }
 
     @Test
@@ -44,6 +46,7 @@ public class DeliveryCardDifficultScenarioTest {
                 .shouldHave(Condition.text("Встреча успешно забронирована на " + dateAcrossSomeWeeks(1, "dd.MM.yyyy")))
                 .shouldBe((Condition.visible));
     }
+
     @Test
     void happyPathAcrossThreeWeeks() {
         String city = "Санкт-Петербург";
